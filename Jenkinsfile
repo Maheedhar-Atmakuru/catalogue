@@ -1,9 +1,25 @@
 @Library('shared-library') _
 
-env.COMPONENT="catalogue"
-env.APPTYPE="nodejs"
-// env.NEXUS_URL = "172.31.38.109"
-// env.SONAR_URL = "172.31.38.100"
-// call is the function that will be called by default. So, we are delcaring the entire pipeline in the vars/nodejs.groovy
-// nodejs()
-docker()
+pipeline { 
+    agent {
+        label 'ws'
+    }
+    stages {
+        stage('Lint Checks') {
+            steps {
+                script {
+                    sample.call('Ola')
+                }
+                sh "echo Installing Lint Checker"
+                sh "npm i jslint"
+                sh "node_modules/jslint/bin/jslint.js server.js || true" 
+            }
+        }
+
+        stage('Static Code Analysis') {
+            steps {
+                sh "echo Static Checks ...."
+            }
+        }
+    }
+}
