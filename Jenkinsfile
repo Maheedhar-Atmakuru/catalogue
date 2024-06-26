@@ -1,7 +1,9 @@
 @Library('shared-library') _
 
 pipeline { 
-    agent any
+    agent {
+        label 'master'
+    }
     stages {
         stage('Lint Checks') {
             steps {
